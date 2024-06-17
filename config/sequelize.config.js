@@ -1,5 +1,5 @@
-const fs = require('fs');
-const { db } = require('./application.config.ts');
+require('ts-node/register');
+const { db } = require('./application.config.js');
 
 console.log(db);
 
@@ -10,6 +10,6 @@ module.exports = {
     database: db.database,
     host: db.host,
     port: db.port,
-    dialect: db.dialect
-  }
+    dialect: db.dialect,
+  },
 };
