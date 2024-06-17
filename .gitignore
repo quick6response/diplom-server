@@ -42,6 +42,8 @@ lerna-debug.log*
 .env.production.local
 .env.local
 
+config/application.config.ts
+
 # temp directory
 .temp
 .tmp
@@ -56,4 +58,3 @@ pids
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 ./src/confog/*.config.ts
 src/config/application.config.ts
-!/.env

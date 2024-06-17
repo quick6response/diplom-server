@@ -26,9 +26,8 @@ export class AuthTokenService {
   }
 
   createRefreshToken(user: JwtPayload) {
-    const expiresDate = new Date();
-    expiresDate.setSeconds(
-      expiresDate.getSeconds() + ApplicationConfig.auth.refreshTokenTime,
+    const expiresDate = new Date(
+      Date.now() + ApplicationConfig.auth.refreshTokenTime * 1000,
     );
 
     return {

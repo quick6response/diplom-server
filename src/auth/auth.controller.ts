@@ -16,12 +16,12 @@ export class AuthController {
     await this.setAssessTokenCookie(
       res,
       authLogin.accessToken.token,
-      authLogin.accessToken.time,
+      authLogin.accessToken.expires,
     );
     await this.setRefreshTokenCookie(
       res,
       authLogin.refreshToken.token,
-      authLogin.refreshToken.time,
+      authLogin.refreshToken.expires,
     );
     return authLogin;
   }

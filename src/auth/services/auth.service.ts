@@ -21,8 +21,14 @@ export class AuthService {
     const { accessToken, refreshToken } = this.generateToken(user);
 
     return {
-      accessToken,
-      refreshToken,
+      accessToken: {
+        token: accessToken.token,
+        expires: accessToken.expiresDate,
+      },
+      refreshToken: {
+        token: refreshToken.token,
+        expires: refreshToken.expiresDate,
+      },
       user: {
         id: user.id,
         firstName: user.firstName,
