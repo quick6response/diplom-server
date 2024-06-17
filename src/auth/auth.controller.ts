@@ -1,5 +1,6 @@
 import { AuthLoginParamsDto } from '@/auth/dto/auth.dto';
 import { AuthService } from '@/auth/services/auth.service';
+import { AuthTokenConstant } from '@/common/constant/auth.constant';
 import { Body, Controller, Post, Res } from '@nestjs/common';
 import type { Response } from 'express';
 
@@ -27,10 +28,17 @@ export class AuthController {
   }
 
   @Post('logout')
-  async logout() {}
+  async logout(@Res({ passthrough: true }) res: Response) {
+    res.clearCookie(AuthTokenConstant.ACCESS_TOKEN);
+    res.clearCookie(AuthTokenConstant.REFRESH_TOKEN);
+
+    return {
+      ok: true,
+    };
+  }
 
   async setAssessTokenCookie(res: Response, token: string, expires: Date) {
-    res.cookie('accessToken', token, {
+    res.cookie(AuthTokenConstant.ACCESS_TOKEN, token, {
       path: '/api',
       expires: expires,
     });
@@ -40,7 +48,7 @@ export class AuthController {
   }
 
   async setRefreshTokenCookie(res: Response, token: string, expires: Date) {
-    res.cookie('refreshToken', token, {
+    res.cookie(AuthTokenConstant.REFRESH_TOKEN, token, {
       path: '/api/auth',
       expires: expires,
     });

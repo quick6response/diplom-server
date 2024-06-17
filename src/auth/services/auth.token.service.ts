@@ -1,19 +1,13 @@
+import { AuthDataJwtPayload } from '@/common/interface/auth.interface';
 import { ApplicationConfig } from '@config/application.config';
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { UserRole } from '../../users/interface/user';
-
-export interface JwtPayload {
-  id: number;
-  role: UserRole;
-  login: string;
-}
 
 @Injectable()
 export class AuthTokenService {
   constructor(private readonly jwtService: JwtService) {}
 
-  createAccessToken(user: JwtPayload) {
+  createAccessToken(user: AuthDataJwtPayload) {
     const expiresDate = new Date();
     expiresDate.setSeconds(
       expiresDate.getSeconds() + ApplicationConfig.auth.assessTokenTime,
@@ -25,7 +19,7 @@ export class AuthTokenService {
     };
   }
 
-  createRefreshToken(user: JwtPayload) {
+  createRefreshToken(user: AuthDataJwtPayload) {
     const expiresDate = new Date(
       Date.now() + ApplicationConfig.auth.refreshTokenTime * 1000,
     );
@@ -38,11 +32,26 @@ export class AuthTokenService {
     };
   }
 
-  verifyToken(token: string) {
-    return this.jwtService.verify<JwtPayload>(token);
+  validateToken(token: string): boolean {
+    try {
+      this.jwtService.verify<AuthDataJwtPayload>(token);
+      return true;
+    } catch (error) {
+      return false;
+    }
   }
 
-  decodeToken(token: string) {
-    return this.jwtService.decode<JwtPayload>(token);
+  decodeToken(token: string): {
+    data: AuthDataJwtPayload | null;
+    ok: boolean;
+  } {
+    try {
+      return {
+        data: this.jwtService.decode<AuthDataJwtPayload>(token),
+        ok: true,
+      };
+    } catch (error) {
+      return { data: null, ok: false };
+    }
   }
 }
