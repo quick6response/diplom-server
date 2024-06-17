@@ -1,11 +1,10 @@
 export const ApplicationConfig = {
-  port: 3010,
   db: {
+    dialect: 'postgres',
     host: 'localhost',
     port: 5432,
     user: 'postgres',
     password: 'postgres',
-    database: 'postgres'
+    database: 'postgres',
   },
-  
 }
