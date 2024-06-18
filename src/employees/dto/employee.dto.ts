@@ -124,3 +124,19 @@ export class EmployeeCreateParamsDto extends OmitType(EmployeeDto, [
 }
 
 export class EmployeeCreateResponseDto extends EmployeeDto {}
+
+export class EmployeePositionInfoResponseDto {
+  @ApiProperty()
+  number: number;
+  @ApiProperty({ example: '1' })
+  name: string;
+  @ApiProperty({ example: '1' })
+  code: string;
+  @ApiProperty({ example: 1 })
+  id: number;
+}
+
+export class EmployeeInfoResponseDto extends EmployeeDto {
+  @ApiProperty({ isArray: true, type: EmployeePositionInfoResponseDto })
+  positions: EmployeePositionInfoResponseDto[];
+}

@@ -8,9 +8,11 @@ import {
   EmployeeCreateResponseDto,
   EmployeeGetAllParamsDto,
   EmployeeGetAllResponseDto,
+  EmployeeInfoResponseDto,
 } from '@/employees/dto/employee.dto';
 import { EmployeePositionsModel } from '@/employees/models/employee.positions.model';
 import { EmployeesModel } from '@/employees/models/employees.model';
+import { PositionsModel } from '@/positions/models/positions.model';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Op, WhereOptions } from 'sequelize';
@@ -154,6 +156,55 @@ export class EmployeesService {
       await transaction.rollback();
       throw new BadRequestException(`Ошибка создания сотрудника: ${err}`);
     }
+  }
+
+  async getInfo(id: number): Promise<EmployeeInfoResponseDto> {
+    const employee = await this.employeeModel.findOne({
+      where: {
+        id,
+      },
+      include: [
+        {
+          model: EmployeePositionsModel,
+          as: 'positions',
+          include: [
+            {
+              model: PositionsModel,
+              as: 'position',
+            },
+          ],
+        },
+      ],
+    });
+
+    if (!employee) {
+      throw new BadRequestException({
+        type: 'not-found-employee',
+        message: 'Сотрудник не найден',
+      });
+    }
+
+    const responsePosition: EmployeeInfoResponseDto['positions'] =
+      employee.positions.map((position) => ({
+        id: position.position.id,
+        name: position.position.name,
+        number: position.number,
+        code: position.position.code,
+      }));
+
+    return {
+      id: employee.id,
+      firstName: employee.firstName,
+      lastName: employee.lastName,
+      middleName: employee.middleName,
+      login: employee.login,
+      numberPhone: employee.numberPhone,
+      passportSerial: employee.passportSerial,
+      passportNumber: employee.passportNumber,
+      createdAt: employee.createdAt,
+      updatedAt: employee.updatedAt,
+      positions: responsePosition,
+    };
   }
 
   private async generateRandomLogin() {

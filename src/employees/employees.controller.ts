@@ -6,9 +6,18 @@ import {
   EmployeeDto,
   EmployeeGetAllParamsDto,
   EmployeeGetAllResponseDto,
+  EmployeeInfoResponseDto,
 } from '@/employees/dto/employee.dto';
 import { EmployeesService } from '@/employees/employees.service';
-import { Body, Controller, Get, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  ParseIntPipe,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('employees')
@@ -30,5 +39,13 @@ export class EmployeesController {
     @Body() body: EmployeeCreateParamsDto,
   ): Promise<EmployeeCreateResponseDto> {
     return this.employeesService.create(body);
+  }
+
+  @Get('/:id')
+  @ApiOkResponseCustom(EmployeeInfoResponseDto)
+  async findOne(
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<EmployeeInfoResponseDto> {
+    return this.employeesService.getInfo(id);
   }
 }

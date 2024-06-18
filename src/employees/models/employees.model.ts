@@ -1,7 +1,9 @@
 import { Employee, EmployeeCreate } from '@/employees/interface/employee';
+import { EmployeePositionsModel } from '@/employees/models/employee.positions.model';
 import {
   AutoIncrement,
   Column,
+  HasMany,
   Model,
   PrimaryKey,
   Table,
@@ -39,4 +41,7 @@ export class EmployeesModel extends Model<Employee, EmployeeCreate> {
 
   createdAt: Date;
   updatedAt: Date;
+
+  @HasMany(() => EmployeePositionsModel)
+  positions: EmployeePositionsModel[];
 }
