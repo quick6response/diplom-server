@@ -2,8 +2,8 @@ import {
   EducationCourseCreateDto,
   EducationCourseGetAllParamsDto,
   EducationCourseUpdateDto,
-} from '@/educationСourse/dto/education.course.dto';
-import { EducationCourseService } from '@/educationСourse/education.course.service';
+} from '@/education/dto/education.course.dto';
+import { EducationCourseService } from '@/education/services/education.course.service';
 import {
   Body,
   Controller,

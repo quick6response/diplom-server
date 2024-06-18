@@ -1,7 +1,7 @@
 import {
   EducationCourse,
   EducationCourseCreate,
-} from '@/educationСourse/interface/education.course.interface';
+} from '@/education/interface/education.course.interface';
 import {
   AutoIncrement,
   Column,

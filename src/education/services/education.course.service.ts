@@ -9,8 +9,9 @@ import {
   EducationCourseGetAllParamsDto,
   EducationCoursesResponseDto,
   EducationCourseUpdateDto,
-} from '@/educationСourse/dto/education.course.dto';
-import { EducationCourseModel } from '@/educationСourse/models/education.course.model';
+} from '@/education/dto/education.course.dto';
+import { EducationCourseModel } from '@/education/models/education.course.model';
+
 import {
   BadRequestException,
   Injectable,

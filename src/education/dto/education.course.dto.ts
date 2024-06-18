@@ -1,5 +1,5 @@
 import { SortOrderConstant } from '@/common/constant/sort.constant';
-import { EducationCourse } from '@/educationСourse/interface/education.course.interface';
+import { EducationCourse } from '@/education/interface/education.course.interface';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEnum, IsNumber, IsOptional, IsString } from 'class-validator';
 
