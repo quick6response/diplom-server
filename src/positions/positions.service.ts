@@ -154,4 +154,23 @@ export class PositionsService {
       ok: true,
     };
   }
+
+  async findOne(id: number) {
+    const positionById = await this.positionsModel.findOne({
+      where: {
+        id,
+      },
+    });
+    if (!positionById) {
+      throw new BadRequestException('Такой специальности не существует');
+    }
+    return {
+      id: positionById.id,
+      code: positionById.code,
+      name: positionById.name,
+      description: positionById.description,
+      createdAt: positionById.createdAt,
+      updatedAt: positionById.updatedAt,
+    };
+  }
 }

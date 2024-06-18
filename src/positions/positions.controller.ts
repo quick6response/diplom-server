@@ -27,7 +27,10 @@ export class PositionsController {
     return this.positionsService.findAll(query);
   }
 
-  async findOne() {}
+  @Get('/:id')
+  async findOne(@Param('id', ParseIntPipe) id: number) {
+    return this.positionsService.findOne(id);
+  }
 
   @Post('/')
   async create(@Body() body: PositionCreateDto) {
