@@ -27,6 +27,10 @@ import { JwtModule } from '@nestjs/jwt';
 import { SequelizeModule } from '@nestjs/sequelize';
 import type { Dialect } from 'sequelize';
 import { PositionsModule } from './positions/positions.module';
+import { HomeController } from './home/home.controller';
+import { HomeService } from './home/home.service';
+import { HomeModule } from './home/home.module';
+import { HomeModule } from './home/home.module';
 
 @Module({
   imports: [
@@ -56,6 +60,7 @@ import { PositionsModule } from './positions/positions.module';
     JwtModule,
     PositionsModule,
     EducationModule,
+    HomeModule,
   ],
   providers: [
     AppService,
@@ -71,12 +76,14 @@ import { PositionsModule } from './positions/positions.module';
       provide: APP_INTERCEPTOR,
       useClass: TransformInterceptor,
     },
+    HomeService,
   ],
   controllers: [
     AppController,
     UsersController,
     EducationCourseController,
     EducationProgramController,
+    HomeController,
   ],
 })
 export class AppModule {}
