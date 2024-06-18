@@ -4,13 +4,13 @@ import {
 } from '@/common/constant/pagination.constant';
 import { SortOrderConstant } from '@/common/constant/sort.constant';
 import {
-  PositionCreateDto,
-  PositionCreateResponseDto,
-  PositionGetAllParamsDto,
-  PositionsResponseDto,
-  PositionUpdateDto,
-} from '@/positions/dto/position.dto';
-import { PositionsModel } from '@/positions/models/positions.model';
+  EducationCourseCreateDto,
+  EducationCourseCreateResponseDto,
+  EducationCourseGetAllParamsDto,
+  EducationCoursesResponseDto,
+  EducationCourseUpdateDto,
+} from '@/educationСourse/dto/education.course.dto';
+import { EducationCourseModel } from '@/educationСourse/models/education.course.model';
 import {
   BadRequestException,
   Injectable,
@@ -22,14 +22,16 @@ import { WhereOptions } from 'sequelize';
 const LIMIT_COUNT = 25;
 
 @Injectable()
-export class PositionsService {
+export class EducationCourseService {
   constructor(
-    @InjectModel(PositionsModel)
-    private readonly positionsModel: typeof PositionsModel,
+    @InjectModel(EducationCourseModel)
+    private readonly educationCourseModel: typeof EducationCourseModel,
   ) {}
 
-  async create(dto: PositionCreateDto): Promise<PositionCreateResponseDto> {
-    const duplicateCode = await this.positionsModel.findOne({
+  async create(
+    dto: EducationCourseCreateDto,
+  ): Promise<EducationCourseCreateResponseDto> {
+    const duplicateCode = await this.educationCourseModel.findOne({
       where: {
         code: dto.code,
       },
@@ -40,13 +42,12 @@ export class PositionsService {
     }
 
     try {
-      const create = await this.positionsModel.create(dto);
+      const create = await this.educationCourseModel.create(dto);
 
       return {
         id: create.id,
         code: create.code,
         name: create.name,
-        description: create.description,
         createdAt: create.createdAt,
         updatedAt: create.updatedAt,
       };
@@ -55,7 +56,9 @@ export class PositionsService {
     }
   }
 
-  async findAll(dto: PositionGetAllParamsDto): Promise<PositionsResponseDto> {
+  async findAll(
+    dto: EducationCourseGetAllParamsDto,
+  ): Promise<EducationCoursesResponseDto> {
     if (!dto.page) {
       dto.page = 1;
     }
@@ -86,7 +89,7 @@ export class PositionsService {
       where.name = dto.name;
     }
 
-    const positions = await this.positionsModel.findAndCountAll({
+    const positions = await this.educationCourseModel.findAndCountAll({
       where,
       limit,
       offset,
@@ -109,25 +112,25 @@ export class PositionsService {
     };
   }
 
-  async update(id: number, dto: PositionUpdateDto) {
-    const positionById = await this.positionsModel.findOne({
+  async update(id: number, dto: EducationCourseUpdateDto) {
+    const positionById = await this.educationCourseModel.findOne({
       where: {
         id,
       },
     });
 
     if (!positionById) {
-      throw new NotFoundException('Такой специальности не существует');
+      throw new NotFoundException('Такой темы обучения не существует');
     }
 
     if (dto.code !== positionById.code) {
-      const duplicateCode = await this.positionsModel.findOne({
+      const duplicateCode = await this.educationCourseModel.findOne({
         where: {
           code: dto.code,
         },
       });
       if (duplicateCode) {
-        throw new BadRequestException('Такая специальность уже существует');
+        throw new BadRequestException('Такая тема обучения уже существует');
       }
     }
 
@@ -137,20 +140,19 @@ export class PositionsService {
       id: positionById.id,
       code: positionById.code,
       name: positionById.name,
-      description: positionById.description,
       createdAt: positionById.createdAt,
       updatedAt: positionById.updatedAt,
     };
   }
 
   async remove(id: number) {
-    const positionById = await this.positionsModel.findOne({
+    const positionById = await this.educationCourseModel.findOne({
       where: {
         id,
       },
     });
     if (!positionById) {
-      throw new NotFoundException('Такой специальности не существует');
+      throw new NotFoundException('Такой темы обучения не существует');
     }
     await positionById.destroy();
 
@@ -160,19 +162,18 @@ export class PositionsService {
   }
 
   async findOne(id: number) {
-    const positionById = await this.positionsModel.findOne({
+    const positionById = await this.educationCourseModel.findOne({
       where: {
         id,
       },
     });
     if (!positionById) {
-      throw new NotFoundException('Такой специальности не существует');
+      throw new NotFoundException('Такой темы обучения не существует');
     }
     return {
       id: positionById.id,
       code: positionById.code,
       name: positionById.name,
-      description: positionById.description,
       createdAt: positionById.createdAt,
       updatedAt: positionById.updatedAt,
     };

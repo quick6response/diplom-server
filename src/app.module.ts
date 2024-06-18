@@ -4,7 +4,10 @@ import { AuthModule } from '@/auth/auth.module';
 import { AuthTokenService } from '@/auth/services/auth.token.service';
 import { AuthGuard } from '@/common/guards/auth.guard';
 import { TransformInterceptor } from '@/common/interceptors/transform.interceptor';
-import { EducationModule } from '@/education/education.module';
+import { EducationCourseController } from '@/educationСourse/education.course.controller';
+import { EducationCourseModule } from '@/educationСourse/education.course.module';
+import { EducationCourseService } from '@/educationСourse/education.course.service';
+import { EducationCourseModel } from '@/educationСourse/models/education.course.model';
 import { EmployeesModule } from '@/employees/employees.module';
 import { PositionsModel } from '@/positions/models/positions.model';
 import { UsersModel } from '@/users/models/users.model';
@@ -28,7 +31,7 @@ import { PositionsModule } from './positions/positions.module';
       username: db.user,
       password: db.password,
       database: db.database,
-      models: [UsersModel, PositionsModel],
+      models: [UsersModel, PositionsModel, EducationCourseModel],
       autoLoadModels: true,
       logging: true,
       logQueryParameters: true,
@@ -37,7 +40,7 @@ import { PositionsModule } from './positions/positions.module';
     UsersModule,
     AuthModule,
     EmployeesModule,
-    EducationModule,
+    EducationCourseModule,
     JwtModule,
     PositionsModule,
   ],
@@ -45,6 +48,7 @@ import { PositionsModule } from './positions/positions.module';
     AppService,
     AuthTokenService,
     UsersService,
+    EducationCourseService,
     {
       provide: APP_GUARD,
       useClass: AuthGuard,
@@ -54,6 +58,6 @@ import { PositionsModule } from './positions/positions.module';
       useClass: TransformInterceptor,
     },
   ],
-  controllers: [AppController, UsersController],
+  controllers: [AppController, UsersController, EducationCourseController],
 })
 export class AppModule {}
