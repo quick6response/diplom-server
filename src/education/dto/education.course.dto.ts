@@ -1,7 +1,25 @@
+import { PaginatedDto } from '@/common/constant/pagination.constant';
 import { SortOrderConstant } from '@/common/constant/sort.constant';
 import { EducationCourse } from '@/education/interface/education.course.interface';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEnum, IsNumber, IsOptional, IsString } from 'class-validator';
+
+export class EducationCourseDto implements EducationCourse {
+  @ApiProperty()
+  id: number;
+
+  @ApiProperty()
+  code: string;
+
+  @ApiProperty()
+  name: string;
+
+  @ApiProperty()
+  createdAt: Date;
+
+  @ApiProperty()
+  updatedAt: Date;
+}
 
 export class EducationCourseGetAllParamsDto {
   @ApiProperty({
@@ -60,12 +78,7 @@ export class EducationCourseCreateDto {
 
 export class EducationCourseUpdateDto extends EducationCourseCreateDto {}
 
-export interface EducationCoursesResponseDto {
-  count: number;
-  rows: EducationCourse[];
-  nextPage: number | null;
-  prevPage: number;
-}
+export class EducationCoursesResponseDto extends PaginatedDto<EducationCourseDto> {}
 
 export interface EducationCourseCreateResponseDto {
   id: number;
@@ -73,4 +86,9 @@ export interface EducationCourseCreateResponseDto {
   name: string;
   createdAt: Date;
   updatedAt: Date;
+}
+
+export class EducationCourseDeleteResponseDto {
+  @ApiProperty({ example: true })
+  ok: boolean;
 }

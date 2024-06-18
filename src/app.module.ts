@@ -5,9 +5,12 @@ import { AuthTokenService } from '@/auth/services/auth.token.service';
 import { AuthGuard } from '@/common/guards/auth.guard';
 import { TransformInterceptor } from '@/common/interceptors/transform.interceptor';
 import { EducationCourseController } from '@/education/controllers/education.course.controller';
+import { EducationProgramController } from '@/education/controllers/education.program.controller';
 import { EducationModule } from '@/education/education.module';
 import { EducationCourseModel } from '@/education/models/education.course.model';
+import { EducationProgramModel } from '@/education/models/education.program.model';
 import { EducationCourseService } from '@/education/services/education.course.service';
+import { EducationProgramService } from '@/education/services/education.program.service';
 
 import { EmployeesModule } from '@/employees/employees.module';
 import { PositionsModel } from '@/positions/models/positions.model';
@@ -32,7 +35,12 @@ import { PositionsModule } from './positions/positions.module';
       username: db.user,
       password: db.password,
       database: db.database,
-      models: [UsersModel, PositionsModel, EducationCourseModel],
+      models: [
+        UsersModel,
+        PositionsModel,
+        EducationCourseModel,
+        EducationProgramModel,
+      ],
       autoLoadModels: true,
       logging: true,
       logQueryParameters: true,
@@ -50,6 +58,7 @@ import { PositionsModule } from './positions/positions.module';
     AuthTokenService,
     UsersService,
     EducationCourseService,
+    EducationProgramService,
     {
       provide: APP_GUARD,
       useClass: AuthGuard,
@@ -59,6 +68,11 @@ import { PositionsModule } from './positions/positions.module';
       useClass: TransformInterceptor,
     },
   ],
-  controllers: [AppController, UsersController, EducationCourseController],
+  controllers: [
+    AppController,
+    UsersController,
+    EducationCourseController,
+    EducationProgramController,
+  ],
 })
 export class AppModule {}

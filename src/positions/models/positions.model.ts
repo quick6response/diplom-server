@@ -1,7 +1,9 @@
+import { EducationProgramModel } from '@/education/models/education.program.model';
 import { Position, PositionCreate } from '@/positions/interface/position';
 import {
   AutoIncrement,
   Column,
+  HasMany,
   Model,
   PrimaryKey,
   Table,
@@ -25,4 +27,7 @@ export class PositionsModel extends Model<Position, PositionCreate> {
 
   createdAt: Date;
   updatedAt: Date;
+
+  @HasMany(() => EducationProgramModel)
+  educationPrograms: EducationProgramModel[];
 }

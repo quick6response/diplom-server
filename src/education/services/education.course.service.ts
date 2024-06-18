@@ -6,6 +6,7 @@ import { SortOrderConstant } from '@/common/constant/sort.constant';
 import {
   EducationCourseCreateDto,
   EducationCourseCreateResponseDto,
+  EducationCourseDeleteResponseDto,
   EducationCourseGetAllParamsDto,
   EducationCoursesResponseDto,
   EducationCourseUpdateDto,
@@ -106,10 +107,12 @@ export class EducationCourseService {
     );
 
     return {
-      count: positions.count,
-      rows: positions.rows,
+      total: positions.count,
+      results: positions.rows,
       nextPage,
       prevPage,
+      limit,
+      offset,
     };
   }
 
@@ -146,7 +149,7 @@ export class EducationCourseService {
     };
   }
 
-  async remove(id: number) {
+  async remove(id: number): Promise<EducationCourseDeleteResponseDto> {
     const positionById = await this.educationCourseModel.findOne({
       where: {
         id,

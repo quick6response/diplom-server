@@ -2,9 +2,11 @@ import {
   EducationCourse,
   EducationCourseCreate,
 } from '@/education/interface/education.course.interface';
+import { EducationProgramModel } from '@/education/models/education.program.model';
 import {
   AutoIncrement,
   Column,
+  HasMany,
   Model,
   PrimaryKey,
   Table,
@@ -30,4 +32,7 @@ export class EducationCourseModel extends Model<
 
   createdAt: Date;
   updatedAt: Date;
+
+  @HasMany(() => EducationProgramModel)
+  educationPrograms: EducationProgramModel[];
 }
