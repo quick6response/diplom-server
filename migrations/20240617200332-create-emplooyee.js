@@ -35,11 +35,11 @@ module.exports = {
             allowNull: false,
           },
           passportSerial: {
-            type: Sequelize.STRING,
+            type: Sequelize.INTEGER,
             allowNull: false,
           },
           passportNumber: {
-            type: Sequelize.STRING,
+            type: Sequelize.INTEGER,
             allowNull: false,
           },
           createdAt: {
@@ -65,6 +65,11 @@ module.exports = {
             type: Sequelize.INTEGER,
             primaryKey: true,
             autoIncrement: true,
+          },
+          number: {
+            type: Sequelize.INTEGER,
+            allowNull: false,
+            defaultValue: 1,
           },
           employeeId: {
             type: Sequelize.INTEGER,

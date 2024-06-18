@@ -13,6 +13,8 @@ import { EducationCourseService } from '@/education/services/education.course.se
 import { EducationProgramService } from '@/education/services/education.program.service';
 
 import { EmployeesModule } from '@/employees/employees.module';
+import { EmployeePositionsModel } from '@/employees/models/employee.positions.model';
+import { EmployeesModel } from '@/employees/models/employees.model';
 import { PositionsModel } from '@/positions/models/positions.model';
 import { UsersModel } from '@/users/models/users.model';
 import { UsersController } from '@/users/users.controller';
@@ -40,6 +42,8 @@ import { PositionsModule } from './positions/positions.module';
         PositionsModel,
         EducationCourseModel,
         EducationProgramModel,
+        EmployeesModel,
+        EmployeePositionsModel,
       ],
       autoLoadModels: true,
       logging: true,
