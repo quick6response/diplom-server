@@ -42,7 +42,7 @@ lerna-debug.log*
 .env.production.local
 .env.local
 
-./config/application.config.*
+/config/application.config.js
 
 # temp directory
 .temp
@@ -57,4 +57,3 @@ pids
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 ./src/confog/*.config.ts
-src/config/application.config.ts

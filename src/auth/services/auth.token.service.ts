@@ -1,5 +1,5 @@
 import { AuthDataJwtPayload } from '@/common/interface/auth.interface';
-import { ApplicationConfig } from '@config/application.config';
+import { auth } from '@config';
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 
@@ -9,9 +9,7 @@ export class AuthTokenService {
 
   createAccessToken(user: AuthDataJwtPayload) {
     const expiresDate = new Date();
-    expiresDate.setSeconds(
-      expiresDate.getSeconds() + ApplicationConfig.auth.assessTokenTime,
-    );
+    expiresDate.setSeconds(expiresDate.getSeconds() + auth.assessTokenTime);
 
     return {
       token: this.jwtService.sign(user),
@@ -20,13 +18,11 @@ export class AuthTokenService {
   }
 
   createRefreshToken(user: AuthDataJwtPayload) {
-    const expiresDate = new Date(
-      Date.now() + ApplicationConfig.auth.refreshTokenTime * 1000,
-    );
+    const expiresDate = new Date(Date.now() + auth.refreshTokenTime * 1000);
 
     return {
       token: this.jwtService.sign(user, {
-        expiresIn: ApplicationConfig.auth.refreshTokenTime,
+        expiresIn: auth.refreshTokenTime,
       }),
       expiresDate: expiresDate,
     };

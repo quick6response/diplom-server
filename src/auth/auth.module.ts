@@ -2,7 +2,7 @@ import { AuthController } from '@/auth/auth.controller';
 import { AuthService } from '@/auth/services/auth.service';
 import { AuthTokenService } from '@/auth/services/auth.token.service';
 import { UsersModel } from '@/users/models/users.model';
-import { ApplicationConfig } from '@config/application.config';
+import { auth } from '@config';
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { SequelizeModule } from '@nestjs/sequelize';
@@ -12,9 +12,9 @@ import { SequelizeModule } from '@nestjs/sequelize';
   imports: [
     SequelizeModule.forFeature([UsersModel]),
     JwtModule.register({
-      secret: ApplicationConfig.auth.secret,
+      secret: auth.secret,
       signOptions: {
-        expiresIn: ApplicationConfig.auth.assessTokenTime,
+        expiresIn: auth.assessTokenTime,
         algorithm: 'HS256',
       },
     }),

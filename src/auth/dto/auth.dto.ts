@@ -1,9 +1,17 @@
 import { User } from '@/users/interface/user';
+import { ApiProperty } from '@nestjs/swagger';
 import { IsString } from 'class-validator';
 
 export class AuthLoginParamsDto {
+  @ApiProperty({
+    example: 'admin',
+  })
   @IsString({ message: 'Логин - должен быть строкой' })
   login: string;
+
+  @ApiProperty({
+    example: 'admin',
+  })
   @IsString({ message: 'Пароль - должен быть строкой' })
   password: string;
 }
