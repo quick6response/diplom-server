@@ -8,6 +8,7 @@ import {
   PositionCreateResponseDto,
   PositionGetAllParamsDto,
   PositionsResponseDto,
+  PositionUpdateDto,
 } from '@/positions/dto/position.dto';
 import { PositionsModel } from '@/positions/models/positions.model';
 import { BadRequestException, Injectable } from '@nestjs/common';
@@ -24,13 +25,13 @@ export class PositionsService {
   ) {}
 
   async create(dto: PositionCreateDto): Promise<PositionCreateResponseDto> {
-    const duplicate = await this.positionsModel.findOne({
+    const duplicateCode = await this.positionsModel.findOne({
       where: {
         code: dto.code,
       },
     });
 
-    if (duplicate) {
+    if (duplicateCode) {
       throw new BadRequestException('Такая специальность уже существует');
     }
 
@@ -101,6 +102,56 @@ export class PositionsService {
       rows: positions.rows,
       nextPage,
       prevPage,
+    };
+  }
+
+  async update(id: number, dto: PositionUpdateDto) {
+    const positionById = await this.positionsModel.findOne({
+      where: {
+        id,
+      },
+    });
+
+    if (!positionById) {
+      throw new BadRequestException('Такой специальности не существует');
+    }
+
+    if (dto.code !== positionById.code) {
+      const duplicateCode = await this.positionsModel.findOne({
+        where: {
+          code: dto.code,
+        },
+      });
+      if (duplicateCode) {
+        throw new BadRequestException('Такая специальность уже существует');
+      }
+    }
+
+    await positionById.update(dto);
+
+    return {
+      id: positionById.id,
+      code: positionById.code,
+      name: positionById.name,
+      description: positionById.description,
+      createdAt: positionById.createdAt,
+      updatedAt: positionById.updatedAt,
+    };
+  }
+
+  async remove(id: number) {
+    const positionById = await this.positionsModel.findOne({
+      where: {
+        id,
+      },
+    });
+    if (!positionById) {
+      throw new BadRequestException('Такой специальности не существует');
+    }
+    await positionById.destroy();
+
+    return {
+      ok: true,
     };
   }
 }

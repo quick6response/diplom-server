@@ -63,6 +63,8 @@ export class PositionCreateDto {
   description: string;
 }
 
+export class PositionUpdateDto extends PositionCreateDto {}
+
 export interface PositionsResponseDto {
   count: number;
   rows: Position[];
