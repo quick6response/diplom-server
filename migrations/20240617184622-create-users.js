@@ -64,6 +64,8 @@ module.exports = {
             login: 'admin',
             password: 'admin',
             role: 'admin',
+            createdAt: new Date(),
+            updatedAt: new Date(),
           },
         ],
         {

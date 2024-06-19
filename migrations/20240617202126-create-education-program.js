@@ -38,11 +38,6 @@ module.exports = {
               key: 'id',
             },
           },
-          upToDate: {
-            type: Sequelize.DATE,
-            allowNull: true,
-            comment: 'Дата окончания обучения',
-          },
           createdAt: {
             allowNull: false,
             type: Sequelize.DATE,
