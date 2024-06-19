@@ -1,4 +1,7 @@
-import { EducationProgramCreateDto } from '@/education/dto/education.program.dto';
+import {
+  EducationProgramCreateDto,
+  EducationProgramGetPositionsResponseDto,
+} from '@/education/dto/education.program.dto';
 import { EducationProgramModel } from '@/education/models/education.program.model';
 import { PositionsModel } from '@/positions/models/positions.model';
 import { Injectable } from '@nestjs/common';
@@ -17,7 +20,7 @@ export class EducationProgramService {
    * Получить должности у которых есть программа обучения
    */
   async getPositionIsEducationProgram(): Promise<
-    { code: string; name: string; countCourses: number }[]
+    EducationProgramGetPositionsResponseDto[]
   > {
     const data = await this.positionModel.findAll({
       include: [
@@ -29,10 +32,11 @@ export class EducationProgramService {
       ],
     });
 
-    return data.map(({ code, name, educationPrograms }) => ({
+    return data.map(({ id, code, name, educationPrograms }) => ({
       code,
       name,
-      countCourses: educationPrograms.length,
+      countCourse: educationPrograms.length,
+      id,
     }));
   }
 

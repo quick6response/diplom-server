@@ -11,7 +11,27 @@ export class EducationProgramCreateDto {
   @ApiProperty({
     isArray: true,
     example: [1, 2, 3],
+    items: {
+      type: 'array',
+      example: 1,
+    },
   })
   @IsArray()
   courseIds: number[];
+}
+
+export class EducationProgramGetPositionsResponseDto {
+  @ApiProperty()
+  id: number;
+  @ApiProperty()
+  name: string;
+  @ApiProperty()
+  code: string;
+  @ApiProperty()
+  countCourse: number;
+}
+
+export class EducationProgramCreateResponseDto {
+  @ApiProperty()
+  id: number;
 }

@@ -26,11 +26,10 @@ import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { JwtModule } from '@nestjs/jwt';
 import { SequelizeModule } from '@nestjs/sequelize';
 import type { Dialect } from 'sequelize';
-import { PositionsModule } from './positions/positions.module';
 import { HomeController } from './home/home.controller';
+import { HomeModule } from './home/home.module';
 import { HomeService } from './home/home.service';
-import { HomeModule } from './home/home.module';
-import { HomeModule } from './home/home.module';
+import { PositionsModule } from './positions/positions.module';
 
 @Module({
   imports: [
